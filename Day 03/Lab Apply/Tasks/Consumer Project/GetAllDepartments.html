@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>GetAll() API Function for Departments</title>
+</head>
+<body>
+    
+    <div class="container">
+        <table class="table table-striped table-bordered table-info text-center mt-5">
+            <thead>
+                <tr>
+                    <th>Department Name</th>
+                    <th>studentsCount</th>
+                    <th>Students List</th>
+                    <th>Massage</th>
+                </tr>
+            </thead>
+            <tbody id="deptTableBody"></tbody>
+    </div>
+
+    <script>
+        async function fetchDepartments() {
+            try {
+                const response = await fetch('http://localhost:5159/api/Departments');
+                const departments = await response.json();
+                const tableBody = document.getElementById('deptTableBody');
+                tableBody.innerHTML = '';
+                console.log(departments);
+                departments.forEach(dept => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${dept.departmentName}</td>
+                        <td>${dept.studentsCount}</td>
+                        <td>[${dept.students.join(', ')}]</td>
+                        <td>${dept.msg}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching departments:', error);
+            }
+        }
+
+        window.onload = fetchDepartments;
+    </script>
+
+</body>
+
+</html>

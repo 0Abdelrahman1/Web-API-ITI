@@ -41,6 +41,24 @@ namespace Project
 
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                //options.AddDefaultPolicy(builder =>
+                //    builder.AllowAnyOrigin()
+                //           .AllowAnyMethod()
+                //           .AllowAnyHeader())
+
+                options.AddPolicy("AllowAll", builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader());
+                options.AddPolicy("AllowSpecificOrigin", builder =>
+                    builder.WithOrigins("http://example.com")
+                           .WithMethods("GET")
+                           .WithHeaders("Authorization"));
+
+            });
+ 
             var app = builder.Build();
 
             app.UseExceptionHandle();
@@ -57,7 +75,7 @@ namespace Project
 
             //app.UseAuthorization();
             //app.UseStaticFiles();
-            app.UseCors();
+            app.UseCors("AllowAll");
 
 
             app.MapControllers();
