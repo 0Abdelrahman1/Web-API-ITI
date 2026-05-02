@@ -18,10 +18,6 @@ Day */**
 !Day */Lab Apply/**
 
 
-# Unignore in D*/** folder
-!Day */D*/
-!Day */D*/**
-
 # no .mp4
 *.mp4
 
